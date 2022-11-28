@@ -1,6 +1,7 @@
 version: '3'
 
 services:
+
   web:
     image: nginx:latest
     container_name: nginx_dev
@@ -15,3 +16,21 @@ services:
       # HTTPS用の証明書とキーをホストOSとコンテナ内で同期
       #- ./???:./???
     tty: true
+
+  db:
+    image: mariadb:latest
+    container_name: mariadb_dev
+    ports:
+      - '${FORWARD_DB_PORT}:3306'
+    volumes:
+      - ./db/sql_data:/var/lib/mysql
+      - ./my.cnf:/etc/mysql/my.cnf
+    restart: always
+    environment:
+      MYSQL_DATABASE: '{DB_DATABASE}'
+      MYSQL_USER: '{DB_USER}'
+      MYSQL_PASSWORD: '{DB_PASSWORD}'
+      MYSQL_HOST: '{DB_HOST}'
+      MYSQL_ROOT_PASSWORD: '{DB_PASSWORD}'
+      MYSQL_ROOT_HOST: '%'
+      TZ: '${TZ}'
