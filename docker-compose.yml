@@ -23,10 +23,13 @@ services:
     ports:
       - '${FORWARD_DB_PORT}:3306'
     volumes:
+      # データをホストOSとコンテナ内で同期
       - ./db/sql_data:/var/lib/mysql
+      # コンフィグファイルをホストOSとコンテナ内で同期
       - ./my.cnf:/etc/mysql/my.cnf
     restart: always
     environment:
+      # アカウントとDBを設定
       MYSQL_DATABASE: '{DB_DATABASE}'
       MYSQL_USER: '{DB_USER}'
       MYSQL_PASSWORD: '{DB_PASSWORD}'
