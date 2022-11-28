@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  web:
+    image: nginx:latest
+    container_name: nginx_dev
+    ports:
+      # "Host Port:Container Port"
+      - "8080:80"
+    volumes:
+      # コンフィグファイルをホストOSとコンテナ内で同期
+      - ./default.conf:/etc/nginx/conf.d/default.conf
+      # コンテンツをホストOSとコンテナ内で同期
+      - ./html:/var/www/html
+      # HTTPS用の証明書とキーをホストOSとコンテナ内で同期
+      #- ./???:./???
+    tty: true
