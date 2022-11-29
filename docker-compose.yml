@@ -38,8 +38,9 @@ services:
       MYSQL_ROOT_HOST: '%'
       TZ: '${TZ}'
 
-  Adminer:
-    image: Adminer
-    conteiner_name: adminer_dev
+  adminer:
+    image: adminer
+    container_name: adminer_dev
     restart: always
-    ports: '${FORWARD_AD_PORT}:8080'
+    ports:
+      - '${FORWARD_AD_PORT}:8080'
