@@ -15,7 +15,6 @@ services:
       - ./html:/var/www/html
       # HTTPS用の証明書とキーをホストOSとコンテナ内で同期
       #- ./???:./???
-    tty: true
 
   db:
     image: mariadb:latest
@@ -26,7 +25,7 @@ services:
       # データをホストOSとコンテナ内で同期
       - ./db/sql_data:/var/lib/mysql
       # コンフィグファイルをホストOSとコンテナ内で同期
-      - ./my.cnf:/etc/mysql/my.cnf
+      - ./db/my.cnf:/etc/mysql/my.cnf
     restart: always
     environment:
       # アカウントとDBを設定
