@@ -43,3 +43,5 @@ services:
     restart: always
     ports:
       - '${FORWARD_AD_PORT}:8080'
+    depends_on:
+      - db
