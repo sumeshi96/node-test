@@ -14,12 +14,13 @@ services:
       # コンテンツをホストOSとコンテナ内で同期
       - ./html:/var/www/html
       # HTTPS用の証明書とキーをホストOSとコンテナ内で同期
-      #- ./???:./???
+      # - ./???:./???
+    networks:
+      - br0
 
   db:
     image: mariadb:latest
     container_name: mariadb_dev
-    hostname: mariadb_dev
     ports:
       - '${FORWARD_DB_PORT}:3306'
     volumes:
@@ -37,13 +38,20 @@ services:
       MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
       MYSQL_ROOT_HOST: '%'
       TZ: '${TZ}'
+    networks:
+      - br0
 
   adminer:
     image: adminer
     container_name: adminer_dev
-    hostname: adminer_dev
     restart: always
     ports:
       - '${FORWARD_AD_PORT}:8080'
     depends_on:
       - db
+    networks:
+      - br0
+
+  networks:
+    br0:
+      driver: bridge
