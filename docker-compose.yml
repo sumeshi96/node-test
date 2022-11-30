@@ -19,24 +19,22 @@ services:
       - br0
 
   db:
-    image: mariadb:latest
+    image: mariadb:10.9
     container_name: mariadb_dev
     ports:
       - '${FORWARD_DB_PORT}:3306'
     volumes:
       # データをホストOSとコンテナ内で同期
       - ./db/sql_data:/var/lib/mysql
-      # コンフィグファイルをホストOSとコンテナ内で同期
-      - ./db/my.cnf:/etc/mysql/my.cnf
+    # コンフィグファイルをホストOSとコンテナ内で同期
+    # - ./db/my.cnf:/etc/mysql/my.cnf
     restart: always
     environment:
       # アカウントとDBを設定
       MYSQL_DATABASE: '${DB_DATABASE}'
       MYSQL_USER: '${DB_USER}'
       MYSQL_PASSWORD: '${DB_PASSWORD}'
-      MYSQL_HOST: '${DB_HOST}'
       MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
-      MYSQL_ROOT_HOST: '%'
       TZ: '${TZ}'
     networks:
       - br0
