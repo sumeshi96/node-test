@@ -19,15 +19,15 @@ services:
       - br0
 
   db:
-    image: mariadb:10.9
+    image: mariadb:latest
     container_name: mariadb_dev
     ports:
       - '${FORWARD_DB_PORT}:3306'
     volumes:
       # データをホストOSとコンテナ内で同期
       - ./db/sql_data:/var/lib/mysql
-    # コンフィグファイルをホストOSとコンテナ内で同期
-    # - ./db/my.cnf:/etc/mysql/my.cnf
+      # コンフィグファイルをホストOSとコンテナ内で同期
+      - ./db/my.cnf:/etc/mysql/conf.d/my.cnf
     restart: always
     environment:
       # アカウントとDBを設定
@@ -40,7 +40,7 @@ services:
       - br0
 
   adminer:
-    image: adminer
+    image: adminer:latest
     container_name: adminer_dev
     restart: always
     ports:
