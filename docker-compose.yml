@@ -2,6 +2,17 @@ version: '3'
 
 services:
 
+  node:
+    image: node:latest
+    working_dir: /home/workspace
+    tty: true
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./node/workspace:/home/workspace
+    networks:
+      - br0
+
   web:
     image: nginx:latest
     container_name: nginx_dev
