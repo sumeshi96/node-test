@@ -29,38 +29,6 @@ services:
     networks:
       - br0
 
-  db:
-    image: mariadb:latest
-    container_name: mariadb_dev
-    ports:
-      - '${FORWARD_DB_PORT}:3306'
-    volumes:
-      # データをホストOSとコンテナ内で同期
-      - ./db/sql_data:/var/lib/mysql
-      # コンフィグファイルをホストOSとコンテナ内で同期
-      - ./db/my.cnf:/etc/mysql/conf.d/my.cnf
-    restart: always
-    environment:
-      # アカウントとDBを設定
-      MYSQL_DATABASE: '${DB_DATABASE}'
-      MYSQL_USER: '${DB_USER}'
-      MYSQL_PASSWORD: '${DB_PASSWORD}'
-      MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
-      TZ: '${TZ}'
-    networks:
-      - br0
-
-  adminer:
-    image: adminer:latest
-    container_name: adminer_dev
-    restart: always
-    ports:
-      - '${FORWARD_AD_PORT}:8080'
-    depends_on:
-      - db
-    networks:
-      - br0
-
 networks:
   br0:
     driver: bridge
